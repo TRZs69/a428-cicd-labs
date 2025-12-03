@@ -3,7 +3,7 @@ node {
         checkout([$class: 'GitSCM',
             branches: [[name: '*/react-app']],
             userRemoteConfigs: [[
-                url: 'https://github.com/<username>/a428-cicd-labs.git',
+                url: 'https://github.com/TRZs69/a428-cicd-labs.git',
                 credentialsId: 'github-credentials'
             ]]
         ])
