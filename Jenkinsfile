@@ -23,7 +23,9 @@ node {
 
     stage('Build') {
         dir('react-app') {
+	   withEnv(['NODE_OPTIONS=--openssl-legacy-provider']) {
             sh 'npm run build'
+	    }
         }
     }
 }
