@@ -1,12 +1,7 @@
 node {
+
     stage('Checkout') {
-        checkout([$class: 'GitSCM',
-            branches: [[name: '*/react-app']],
-            userRemoteConfigs: [[
-                url: 'https://github.com/TRZs69/a428-cicd-labs.git',
-                credentialsId: 'github-credentials'
-            ]]
-        ])
+        checkout scm
     }
 
     stage('Install') {
@@ -17,15 +12,28 @@ node {
 
     stage('Test') {
         dir('react-app') {
-            sh 'npm test -- --watch=false || true'
+            sh 'npm test -- --watch=false'
         }
     }
 
-    stage('Build') {
+    stage('Manual Approval') {
+        timeout(time: 5, unit: 'MINUTES') {
+            input message: 'Lanjutkan ke tahap Deploy?'
+        }
+    }
+
+    stage('Deploy') {
         dir('react-app') {
-	   withEnv(['NODE_OPTIONS=--openssl-legacy-provider']) {
-            sh 'npm run build'
-	    }
+            // Start app di background
+            sh 'npm start &'
+
+            echo 'Aplikasi berjalan selama 1 menit...'
+            sleep 60
+
+            // Matikan setelah 1 menit
+            sh 'pkill node || true'
         }
     }
 }
+
+
