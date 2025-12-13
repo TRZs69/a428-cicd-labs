@@ -11,6 +11,10 @@ node {
         }
     }
 
+    stage('Build') {
+        sh 'npm run build'
+    }
+
     stage('Test') {
         dir('react-app') {
             sh 'CI=true npm test -- --watchAll=false'
