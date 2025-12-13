@@ -12,10 +12,11 @@ node {
     }
 
     stage('Build') {
-        dir('react-app') {
-	    sh 'npm run build'
-    	}
+  	dir('react-app') {
+    	    sh 'export NODE_OPTIONS=--openssl-legacy-provider && npm run build'
+  	}
     }
+
 
     stage('Test') {
         dir('react-app') {
