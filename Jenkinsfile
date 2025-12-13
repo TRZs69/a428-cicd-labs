@@ -12,7 +12,9 @@ node {
     }
 
     stage('Build') {
-        sh 'npm run build'
+        dir('react-app') {
+	    sh 'npm run build'
+    	}
     }
 
     stage('Test') {
